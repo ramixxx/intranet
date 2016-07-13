@@ -2,8 +2,10 @@
 <cfset commonObj 	= createObject("component", "cfc.common")>	
 
 <cfquery name="projects" datasource="test">
-	SELECT * FROM projects 
-	WHERE is_active = 1
+	SELECT * FROM projects AS p
+	LEFT JOIN user_project up ON up.project_id = p.id
+	LEFT JOIN users u ON u.user_id = up.user_id
+	WHERE p.is_active = 1 AND u.username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#session.username#">
 	<!--- LEFT JOIN project_item_types ON projects.id = project_item_types.project_id
 	WHERE type_id IN (1,3,4,5,6) --->
 </cfquery>
@@ -179,7 +181,6 @@
                                         <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
                                 </div> --->
                             </div>
-<!--- <cfdump var="#test#"> --->
                             <div class="project-list">
 
                                 <table class="table table-hover table-striped">
@@ -312,7 +313,7 @@
         </div>
         </div>
 
-<cfscript>
+<!--- <cfscript>
 	function arrayOfStructuresToQuery(theArray){
 		var colNames = "";
 		var theQuery = queryNew("");
@@ -335,7 +336,7 @@
 		}
 		return theQuery;
 	}
-</cfscript>
+</cfscript> --->
 
 
 		

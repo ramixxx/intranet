@@ -6,7 +6,8 @@
 	<!---  <cflocation url="/login/" addtoken="no"> --->
 </cfif>
 
-<cfcontent type="text/html; charset=utf-8" reset="true" /><!DOCTYPE html>
+<cfcontent type="text/html; charset=utf-8" reset="true" />
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -26,5 +27,6 @@
 
 <body class="">
 
-    <div id="wrapper"><!--- <cfdump var="#session#"> --->
+    <div id="wrapper">
+	<!--- <cfdump var="#session#" label="session"> --->
 	<cfinclude template="_nav.cfm">

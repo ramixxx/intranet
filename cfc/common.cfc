@@ -12,7 +12,9 @@
 		<cfargument name="domain" required="true">
 		<cfargument name="user" required="true">
 		<cfargument name="password" required="true">
-	
+		
+		<cfset variables.login = "">
+		
 		<cftry>	  
 			<cfldap action="query" 
 					server="#arguments.ldap_server#" 
@@ -22,22 +24,37 @@
 					username="#arguments.domain#\#arguments.user#" 
 					password="#arguments.password#" 
 					attributes = "cn,givenName,sn,mail,telephonenumber, SamAccountname"
-			>
-					   
+			>	 		
 			<cfcatch type="any">
-				
+				<cfset variables.email_subject = 'Error: '& cfcatch.message>
+				<cfsavecontent variable="emailBody">
+					<cfdump var="#form#" label="form">
+					<cfdump var="#cfcatch#" label="cfcatch">
+				</cfsavecontent>
+					<!--- 		
+					<cfset sendEmail(
+							subject = variables.email_subject
+							, from = 'intranet@thoughtbubble.com'
+							, to = 'admin.thoughtbubble.com'
+							, bcc = 'patrick.a@thoughtbubble.com'
+							, email_body = variables.emailBody
+						)
+					> 
+					--->
+					<cfset variables.errorDir = 'C:\inetpub\wwwroot\intranet\errors\'>
+					<cfif NOT directoryExists(variables.errorDir)>
+						<cfdirectory action="create" directory="#variables.errorDir#">
+					</cfif>
+					<cfset variables.errorLog = '#variables.errorDir#error.log'>
+					<cffile nameconflict="makeunique" file="#variables.errorLog#" output="#variables.emailBody#" action="write">
 			</cfcatch>
-			
 		</cftry>
 		
 		<cfif IsDefined('results')>
 			<cfset variables.login = Results>
-		<cfelse>
-			<cfset variables.login = "">
 		</cfif>
 		
 		<cfreturn variables.login>
-	
 	</cffunction>
 	
 	
@@ -80,8 +97,6 @@
 		<cfargument name="api_url" default="https://basecamp.com/2544469/api/v1/projects.json">
  		<cfargument name="username" required="true" default="">
 		<cfargument name="password" required="true" default="">
-			
-			
 			<cfhttp url="#arguments.api_url#"
 					method="GET"
 					username="#arguments.username#"
@@ -95,8 +110,6 @@
 			
 			<cfreturn variables.result>
 	</cffunction>
-	
-
 				
 <!--- 		
 	FORECASTAPP API can't find documentation for this just guessed based on looking at browser inspect
@@ -109,7 +122,6 @@
 	https://api.forecastapp.com/user_connections
 	https://api.forecastapp.com/clients
 	https://api.forecastapp.com/people
-
 
 	end_date=2016-06-19&start_date=2016-05-02
 --->
@@ -139,7 +151,8 @@
 		<cfreturn variables.result>
 	</cffunction>
 	
-	<!--- <cffunction name="pivot_data" hint="">
+	<!--- 
+	<cffunction name="pivot_data" hint="">
 		<cfargument name="query_data">
 		<cfargument name="query_column_to pivot">
 		
@@ -156,35 +169,42 @@
 			<cfset querySetCell(firstQuery,projects.type_name[currentrow],projects.value[currentrow],aRow)>
 		</cfloop>
 	
-	</cffunction> --->
+	</cffunction> 
+	--->
 	
 	<cffunction name="arrayOfStructuresToQuery" hint="">
-		<cfargument name="theArray" required="true">
-			<cfscript>
-				var colNames = "";
-				var theQuery = queryNew("");
-				var i=0;
-				var j=0;
-				//if there's nothing in the array, return the empty query
-				//WriteDump(arguments.theArray);
-				if(NOT arrayLen(arguments.theArray))
-					return theQuery;
-				//get the column names into an array =	
-				colNames = structKeyArray(arguments.theArray[1]);
-				//build the query based on the colNames
-				theQuery = queryNew(arrayToList(colNames));
-				//add the right number of rows to the query
-				queryAddRow(theQuery, arrayLen(arguments.theArray));
-				//for each element in the array, loop through the columns, populating the query
-				for(i=1; i LTE arrayLen(arguments.theArray); i=i+1){
-					for(j=1; j LTE arrayLen(colNames); j=j+1){
-						if (NOT IsNull(arguments.theArray[i][colNames[j]]))
-							querySetCell(theQuery, colNames[j], arguments.theArray[i][colNames[j]], i);
-						}
-				}
-				return theQuery;
+		<cfargument name="theArray" type="any" required="true">
+
+		<cfset variables.colNames = "">
+		<cfset variables.theQuery = queryNew("")>
+		
+		<!--- if the arguments.theArray is not an array, return the empty query --->
+		<cfif not isArray(arguments.theArray)>
+			<cfset variables.theQuery = variables.theQuery>
+		<cfelse>
+			<!--- if there's nothing in the array, return the empty query --->
+			<cfif NOT arrayLen(arguments.theArray)>
+				<cfset variables.theQuery = variables.theQuery>
+			</cfif>
+		
+			<!--- get the column names into an array =	--->
+			<cfset variables.colNames = structKeyArray(arguments.theArray[1])>
 			
-			</cfscript>
+			<!--- build the query based on the colNames --->
+			<cfset variables.theQuery = queryNew(arrayToList(colNames))>
+			
+			<!--- add the right number of rows to the query --->
+			<cfset queryAddRow(variables.theQuery, arrayLen(arguments.theArray))>
+			
+			<!--- for each element in the array, loop through the columns, populating the query --->
+			<cfloop from="1" to="#arrayLen(arguments.theArray)#" index="i">
+				<cfloop from="1" to="#arrayLen(colNames)#" index="j">
+					<cfset querySetCell(variables.theQuery, colNames[j], arguments.theArray[i][colNames[j]], i)>
+				</cfloop>
+			</cfloop>
+		</cfif>
+		
+		<cfreturn variables.theQuery>
 	</cffunction>
 
 	
@@ -228,6 +248,39 @@
 			
 			</cfif>
 		<cfreturn dirInfo />
+		
+	</cffunction>
+	
+	
+	<cffunction name="sendEmail" returntype="any" output="false">
+		<cfargument name="first_name" type="string" required="true" default="User">
+		<cfargument name="last_name" type="string" required="false" default="">
+		<cfargument name="from" type="string" required="true" default="intranet@thoughtbubble.com">
+		<cfargument name="to" type="string" required="true" default="">
+		<cfargument name="cc" type="string" required="true" default="">
+		<cfargument name="bcc" type="string" required="true" default="">
+		<cfargument name="subject" type="string" required="true">
+		<cfargument name="email_body" type="any" required="true" default="no message!">
+		<cfargument name="type" type="string" required="true" default="text/html">
+		
+		<cfmail 
+			from="#arguments.from#" 
+			to="#arguments.to#"
+			cc="#arguments.cc#" 
+			bcc="#arguments.bcc#" 
+			subject="#arguments.subject#" 
+			type = "#arguments.type#"
+		>
+			<cfoutput>
+				Dear #arguments.first_name##iif(arguments.last_name EQ '', DE(''),DE(' #arguments.last_name#'))#,
+				<br></br>
+				#arguments.email_body#
+				<br>
+				If you need any assistance, Contact your system Administrator<br>
+				<br><br>
+				#APPLICATION.applicationname#<br></br>				
+			</cfoutput>
+		</cfmail>
 		
 	</cffunction>
  

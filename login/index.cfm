@@ -4,7 +4,6 @@
 <cfif form.submit NEQ ''>
 	<cfset login = commonObj.ldap_login(ldap_server="10.0.0.86",domain="thoughtbubble",user=form.user,password=form.password)>
 	
-	<!--- <cfdump var="#variables.login#"> --->
 	<cfif LEN(variables.login)>
 		<cfdump var="#session#">
 		<cfset session.username = variables.login.SamAccountname>
@@ -12,14 +11,13 @@
 		<cfdump var="#session#">
 		<cflocation url="/projects/" addtoken="no"> 
 	<cfelse>
-		<cfset message = "No User Found Please try again">
+		<cfset message = "No User Found Please try again. Please log in with your system login details.">
 	</cfif>
-	<cfdump var="#login#">
-	
 </cfif> 
 
 <!--- <cfdump var="#session#"> --->
-<!--- <cfcontent type="text/html; charset=utf-8" reset="true" /> ---><!DOCTYPE html>
+<!--- <cfcontent type="text/html; charset=utf-8" reset="true" /> --->
+<!DOCTYPE html>
 <html>
 
 <head>

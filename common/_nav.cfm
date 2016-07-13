@@ -32,10 +32,7 @@
 						<a href="#menu_items.link#"><i class="#menu_items.icon#"></i> <span class="nav-label">#menu_items.name#</span></a>
 					</li>
 				</cfoutput>
-
-
             </ul> 
-
         </div>
     </nav>
 	

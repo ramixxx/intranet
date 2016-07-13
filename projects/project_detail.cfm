@@ -20,7 +20,6 @@
 		ORDER  BY project_item_types.type_id DESC
 	</cfquery>
 	
-	
 	<cfset url_image = '/img/webs/ae3.int.thoughtbubble.net.jpg'>
 	
 	<cfset item_types = "">
@@ -45,16 +44,14 @@
         </div>
 		<cfhttp url="https://basecamp.com/2544469/api/v1/projects/#URL.id#/topics.json"
 					method="GET"
-					username="mitch.e@thoughtbubble.com"
-					password="radic6basecamp"
-					result="topics"
-					
-			>
+					username="patrick.a@thoughtbubble.com"
+					password="pa77cfkit"
+					result="topics"		
+		>
 			
 			<cfset result = deserializeJSON(topics.filecontent)>
-			<cfset test = arrayOfStructuresToQuery(result)>
-
-				
+			<cfset qryActivity = commonObj.arrayOfStructuresToQuery(theArray = result)>
+	
 		  <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
                     <h2>Project detail:</h2>
@@ -261,8 +258,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--- <cfdump var="#test#"> --->
-										<cfloop query="test">
+                                        <!--- <cfdump var="#qryActivity#"> --->
+										<cfif qryActivity.recordcount>
+										<cfloop query="qryActivity">
 											<cfoutput>
 												<tr>
 													<td>
@@ -286,7 +284,11 @@
 												</tr>
 											</cfoutput>
 										</cfloop>
-                                     
+										<cfelse>
+											<tr>
+												<td colspan="5" style="text-align:center;"> <h2>No Records Found</h2></td>
+											</tr>
+										</cfif>
 
                                         </tbody>
                                     </table>
@@ -348,31 +350,42 @@
                 <strong>Copyright</strong> TB &copy; 2016
             </div>
         </div>
-
-<cfscript>
+<!---  <cfscript>
 	function arrayOfStructuresToQuery(theArray){
 		var colNames = "";
 		var theQuery = queryNew("");
 		var i=0;
 		var j=0;
-		//if there's nothing in the array, return the empty query
-		if(NOT arrayLen(theArray))
+		
+		//if the arguments.theArray is not an array, return the empty query
+		if(not isArray(theArray)){
 			return theQuery;
+		}else{
+			//if there's nothing in the array, return the empty query
+			if(NOT arrayLen(theArray)){
+				return theQuery;
+			}
+		}
+		
 		//get the column names into an array =	
 		colNames = structKeyArray(theArray[1]);
+		
 		//build the query based on the colNames
 		theQuery = queryNew(arrayToList(colNames));
+		
 		//add the right number of rows to the query
 		queryAddRow(theQuery, arrayLen(theArray));
+		
 		//for each element in the array, loop through the columns, populating the query
 		for(i=1; i LTE arrayLen(theArray); i=i+1){
 			for(j=1; j LTE arrayLen(colNames); j=j+1){
 				querySetCell(theQuery, colNames[j], theArray[i][colNames[j]], i);
 			}
 		}
+		
 		return theQuery;
 	}
-</cfscript>
+</cfscript>  --->
 
 
 		
