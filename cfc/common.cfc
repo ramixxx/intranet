@@ -183,25 +183,27 @@
 			<cfset variables.theQuery = variables.theQuery>
 		<cfelse>
 			<!--- if there's nothing in the array, return the empty query --->
-			<cfif NOT arrayLen(arguments.theArray)>
+			<cfif ArrayIsEmpty(arguments.theArray)><!--- NOT arrayLen(arguments.theArray) and  --->
 				<cfset variables.theQuery = variables.theQuery>
-			</cfif>
+			<cfelse>
 		
-			<!--- get the column names into an array =	--->
-			<cfset variables.colNames = structKeyArray(arguments.theArray[1])>
-			
-			<!--- build the query based on the colNames --->
-			<cfset variables.theQuery = queryNew(arrayToList(colNames))>
-			
-			<!--- add the right number of rows to the query --->
-			<cfset queryAddRow(variables.theQuery, arrayLen(arguments.theArray))>
-			
-			<!--- for each element in the array, loop through the columns, populating the query --->
-			<cfloop from="1" to="#arrayLen(arguments.theArray)#" index="i">
-				<cfloop from="1" to="#arrayLen(colNames)#" index="j">
-					<cfset querySetCell(variables.theQuery, colNames[j], arguments.theArray[i][colNames[j]], i)>
+				<!--- get the column names into an array =	--->
+				<cfset variables.colNames = structKeyArray(arguments.theArray[1])>
+				
+				<!--- build the query based on the colNames --->
+				<cfset variables.theQuery = queryNew(arrayToList(colNames))>
+				
+				<!--- add the right number of rows to the query --->
+				<cfset queryAddRow(variables.theQuery, arrayLen(arguments.theArray))>
+				
+				<!--- for each element in the array, loop through the columns, populating the query --->
+				<cfloop from="1" to="#arrayLen(arguments.theArray)#" index="i">
+					<cfloop from="1" to="#arrayLen(colNames)#" index="j">
+						<cfset querySetCell(variables.theQuery, colNames[j], arguments.theArray[i][colNames[j]], i)>
+					</cfloop>
 				</cfloop>
-			</cfloop>
+			
+			</cfif>
 		</cfif>
 		
 		<cfreturn variables.theQuery>
