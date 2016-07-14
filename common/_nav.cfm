@@ -19,7 +19,7 @@
                             <li><a href="contacts.html">Contacts</a></li>
                             <li><a href="mailbox.html">Mailbox</a></li>
                             <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
+                            <li><a href="?logout">Logout</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
@@ -51,7 +51,7 @@
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to Thoughtbubble</span>
                 </li>
-                <!--- <li class="dropdown">
+				<li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
                     </a>
@@ -145,11 +145,9 @@
                             </div>
                         </li>
                     </ul>
-                </li> --->
-
-
+                </li> 
                 <li>
-                    <a href="/login/logout.cfm">
+                    <a href="?logout">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
