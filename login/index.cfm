@@ -6,7 +6,7 @@
 	
 	<cfif LEN(variables.login)>
 		<cfdump var="#session#">
-		<cfset session.username = variables.login.SamAccountname>
+		<cfset session.User.username = variables.login.SamAccountname>
 		<cfset SESSION.User.logged_in = "true"> 
 		<cfdump var="#session#">
 		<cflocation url="/projects/" addtoken="no"> 

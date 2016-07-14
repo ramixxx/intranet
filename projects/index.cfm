@@ -5,7 +5,7 @@
 	SELECT * FROM projects AS p
 	LEFT JOIN user_project up ON up.project_id = p.id
 	LEFT JOIN users u ON u.user_id = up.user_id
-	WHERE p.is_active = 1 AND u.username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#session.username#">
+	WHERE p.is_active = 1 AND u.username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#session.user.username#">
 	<!--- LEFT JOIN project_item_types ON projects.id = project_item_types.project_id
 	WHERE type_id IN (1,3,4,5,6) --->
 </cfquery>
