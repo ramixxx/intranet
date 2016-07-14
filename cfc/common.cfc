@@ -93,7 +93,7 @@
 	GET /calendars/1/calendar_events/past.json will return past calendar events for the calendar.
 --->
 	
-	<cffunction name="basecamp_api" hint="">
+	<cffunction name="basecamp_api" returntype="any" hint="returns ">
 		<cfargument name="api_url" default="https://basecamp.com/2544469/api/v1/projects.json">
  		<cfargument name="username" required="true" default="">
 		<cfargument name="password" required="true" default="">
@@ -101,11 +101,11 @@
 					method="GET"
 					username="#arguments.username#"
 					password="#arguments.password#"
+					result="result"
 					<!--- Lucee 5 supports cachedWithin on cfhttp --->
 					<!--- cachedWithin="#createTimespan(0,0,10,0)#" --->
 			>
-			
-			<cfset variables.result = deserializeJSON(cfhttp.filecontent)>
+			<cfset variables.result = deserializeJSON(result.filecontent)>
 			<cfset variables.result = arrayOfStructuresToQuery(variables.result)>
 			
 			<cfreturn variables.result>
@@ -147,7 +147,6 @@
 		
 		<cfset variables.result = deserializeJSON(result.filecontent)>
 		<cfset variables.result = arrayOfStructuresToQuery(result.milestones)>
-		
 		<cfreturn variables.result>
 	</cffunction>
 	
@@ -174,7 +173,6 @@
 	
 	<cffunction name="arrayOfStructuresToQuery" hint="">
 		<cfargument name="theArray" type="any" required="true">
-
 		<cfset variables.colNames = "">
 		<cfset variables.theQuery = queryNew("")>
 		
@@ -186,7 +184,6 @@
 			<cfif ArrayIsEmpty(arguments.theArray)><!--- NOT arrayLen(arguments.theArray) and  --->
 				<cfset variables.theQuery = variables.theQuery>
 			<cfelse>
-		
 				<!--- get the column names into an array =	--->
 				<cfset variables.colNames = structKeyArray(arguments.theArray[1])>
 				
@@ -199,10 +196,12 @@
 				<!--- for each element in the array, loop through the columns, populating the query --->
 				<cfloop from="1" to="#arrayLen(arguments.theArray)#" index="i">
 					<cfloop from="1" to="#arrayLen(colNames)#" index="j">
-						<cfset querySetCell(variables.theQuery, colNames[j], arguments.theArray[i][colNames[j]], i)>
+						<!--- we check to see if the key exist if it doesn't we skip it else we setit to its coressponding cell --->
+						<cfif structKeyExists(arguments.theArray[i], colNames[j])>
+							<cfset querySetCell(variables.theQuery, colNames[j], arguments.theArray[i][colNames[j]], i)>
+						</cfif>
 					</cfloop>
 				</cfloop>
-			
 			</cfif>
 		</cfif>
 		

@@ -1,133 +1,13 @@
-<!--- OBJECTS!! --->
-<cfset commonObj 	= createObject("component", "cfc.common")>	
+<!--- OBJECTS!! 
+<cfset commonObj 	= createObject("component", "cfc.common")>	--->
 
- <cfquery name="users" datasource="test">
+ <cfquery name="qryUsers" datasource="#application.DSN#">
 	SELECT * FROM users
 	ORDER by first_name, last_name
 </cfquery> 
 
 <cfinclude template="/common/header.cfm">
 
-      <!---      <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <small class="pull-right">46h ago</small>
-                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5h ago</small>
-                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/profile.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">23h ago</small>
-                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="mailbox.html">
-                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="mailbox.html">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="profile.html">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="grid_options.html">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="notifications.html">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="login.html">
-                        <i class="fa fa-sign-out"></i> Log out
-                    </a>
-                </li>
-            </ul>
-
-        </nav> --->
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -176,7 +56,7 @@
                                         <div class="table-responsive">
                                             <table class="table table-striped table-hover">
                                                 <tbody>
-												<cfloop query="users">
+												<cfloop query="qryUsers">
 												<cfoutput>
 												<tr>
 													<td class="client-avatar"><img alt="image" src="/img/user_icon.png"> </td>
@@ -185,7 +65,12 @@
 													<td class="contact-type"><i class="fa fa-envelope">  </i> #email#</td>
 													<!--- <td> </td> --->
 													<td class="contact-type"><i class="fa fa-phone">  #ext_no#</i></td>
-													<!--- <td class="client-status"><span class="label label-primary">Active</span></td> --->
+													<cfif qryUsers.active>
+														<cfset label_class = 'label-primary'>
+													<cfelse>
+														<cfset label_class = 'label-danger'>
+													</cfif>
+													<td class="client-status"><span class="label #label_class#">#IIf(qryUsers.active, DE('Active'), DE('In-Active'))#</span></td> 
 												</tr>
 
 												</cfoutput>
@@ -222,104 +107,97 @@
 
                         <div class="ibox-content">
                             <div class="tab-content">
-                            <cfloop query="users">
-							<cfoutput>
-<!--- 							<cfhttp url="https://basecamp.com/2544469/api/v1/people/#basecamp_user_id#/events.json?since=2016-05-01T11:00:00-06:00"
-					method="GET"
-					username=""
-					password=""
-			>
-			
-			<cfset variables.result = deserializeJSON(cfhttp.filecontent)>
-			<!--- <cfdump var="#variables.result#"> --->
-			<cfset variables.result = commonObj.arrayOfStructuresToQuery(variables.result)>
-							
-							<cfdump var="#variables.result#"> --->
-							 <cfset project = commonObj.basecamp_api(api_url='https://basecamp.com/2544469/api/v1/people/#basecamp_user_id#/events.json?since=2016-04-24T11:00:00-06:00'
-										,username=''
-										,password='')> 
-							
-							  <div id="contact-#user_id#" class="tab-pane <cfif currentrow eq 1 >active</cfif>">
-                                    <div class="row m-b-lg">
-                                        <div class="col-lg-4 text-center">
-                                            <h2>#first_name# #last_name#</h2>
+								<cfloop query="qryUsers">
+									<cfoutput>
+									<cflock timeout="30">
+										<cfset qryProject = application.commonObj.basecamp_api(
+															api_url="https://basecamp.com/2544469/api/v1/people/#basecamp_user_id#/events.json"
+															, username="patrick.a@thoughtbubble.com"
+															, password="pa77cfkit"
+												)
+										>
+									</cflock>
+									  <div id="contact-#qryUsers.user_id#" class="tab-pane <cfif qryUsers.username eq session.user.username >active</cfif>">
+											<div class="row m-b-lg">
+												<div class="col-lg-4 text-center">
+													<h2 style="text-transform: capitalize;">#lcase(qryUsers.first_name)# #LCase(qryUsers.last_name)#</h2>
 
-                                            <div class="m-b-sm">
-                                                <img alt="image" class="img-circle" src="/img/user_icon.png"
-                                                     style="width: 62px">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <strong>
-                                                About me
-                                            </strong>
+													<div class="m-b-sm">
+														<img alt="image" class="img-circle" src="/img/user_icon.png"
+															 style="width: 62px">
+													</div>
+												</div>
+												<div class="col-lg-8">
+													<strong>
+														About me
+													</strong>
 
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </p>
-                                            <button type="button" class="btn btn-primary btn-sm btn-block"><i
-                                                    class="fa fa-envelope"></i> Send Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="client-detail">
-                                    <div class="full-height-scroll">
+													<p>
+														Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+														tempor incididunt ut labore et dolore magna aliqua.
+													</p>
+													<button type="button" class="btn btn-primary btn-sm btn-block"><i
+															class="fa fa-envelope"></i> Send Message
+													</button>
+												</div>
+											</div>
+											<div class="client-detail">
+											<div class="full-height-scroll">
 
-                                        <!--- <strong>Last activity</strong>
+												<strong>Last activity</strong>
 
-                                        <ul class="list-group clear-list">
-                                            <li class="list-group-item fist-item">
-                                                <span class="pull-right"> 09:00 pm </span>
-                                                Please contact me
-                                            </li>
-                                            <li class="list-group-item">
-                                                <span class="pull-right"> 10:16 am </span>
-                                                Sign a contract
-                                            </li>
-                                            <li class="list-group-item">
-                                                <span class="pull-right"> 08:22 pm </span>
-                                                Open new shop
-                                            </li>
-                                            <li class="list-group-item">
-                                                <span class="pull-right"> 11:06 pm </span>
-                                                Call back to Sylvia
-                                            </li>
-                                            <li class="list-group-item">
-                                                <span class="pull-right"> 12:00 am </span>
-                                                Write a letter to Sandra
-                                            </li>
-                                        </ul> --->
-                                        <strong>Notes</strong>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua.
-                                        </p>
-                                        <hr/>
-                                        <strong>Timeline activity</strong>
-                                        <div id="vertical-timeline" class="vertical-container dark-timeline">
-                                           <cfloop query="project">
-											<cfoutput>
-										   <div class="vertical-timeline-block">
-                                                <div class="vertical-timeline-icon gray-bg">
-                                                    <i class="fa fa-coffee"></i>
-                                                </div>
-                                                <div class="vertical-timeline-content">
-                                                    <p>#project.summary#
-                                                    </p>
-                                                    <span class="vertical-date small text-muted"> #DATETIMEFORMAT(project.updated_at)# </span>
-                                                </div>
-                                            </div>
-											</cfoutput>
-											</cfloop>
-                                          
-                                           
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-								</cfoutput>
-								</cfloop>
+												<ul class="list-group clear-list">
+													<li class="list-group-item fist-item">
+														<span class="pull-right"> 09:00 pm </span>
+														Please contact me
+													</li>
+													<li class="list-group-item">
+														<span class="pull-right"> 10:16 am </span>
+														Sign a contract
+													</li>
+													<li class="list-group-item">
+														<span class="pull-right"> 08:22 pm </span>
+														Open new shop
+													</li>
+													<li class="list-group-item">
+														<span class="pull-right"> 11:06 pm </span>
+														Call back to Sylvia
+													</li>
+													<li class="list-group-item">
+														<span class="pull-right"> 12:00 am </span>
+														Write a letter to Sandra
+													</li>
+												</ul>
+												<strong>Notes</strong>
+												<p>
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+													tempor incididunt ut labore et dolore magna aliqua.
+												</p>
+												<hr/>
+												<strong>Timeline activity</strong>
+												<div id="vertical-timeline" class="vertical-container dark-timeline">
+												                                    
+												<cfloop query="qryProject">
+													<cfoutput>
+														<div class="vertical-timeline-block">
+															<div class="vertical-timeline-icon gray-bg">
+																<i class="fa fa-coffee"></i>
+															</div>
+															<div class="vertical-timeline-content">
+																<p>#qryProject.summary#
+																</p>
+																<span class="vertical-date small text-muted"> #DATETIMEFORMAT(qryProject.updated_at)# </span>
+															</div>
+														</div>
+													</cfoutput>
+												</cfloop> 
+												
+												</div>
+											</div>
+											</div>
+										</div>
+										</cfoutput>
+									</cfloop>
 								
 
                                 <div id="company-1" class="tab-pane">
@@ -535,38 +413,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-	<!--- 	<Cfdump var="#session#"> --->
-<!--- 
-<cfoutput query="projects" group="id">
-	Project Name:#project_name# <cfoutput>#type_name# -- #value#<br></cfoutput>
-</cfoutput>
-
-
-<cfset project = commonObj.forecast_api(api_url='https://api.forecastapp.com/milestones?end_date=2016-08-5&start_date=2016-05-02'
-										,forecast_account_id='95989'
-										,authorization='Bearer 14303.oeODZQ8hLibU5k0f6WbwpSGmjvg9bwVIkUxskcCrAe-SumqdncO78HgR5wC3ea9MYu3TjiMcG0X5VWenNko7pA')>
-		
- <cfdump var="#project#">  --->
-
- 
-<!---  <cfset project = commonObj.basecamp_api(api_url='https://basecamp.com/2544469/api/v1/projects.json'
-										,username='mitch.e@thoughtbubble.com'
-										,password='radic6basecamp')>
- 
- <cfdump var="#project#">  --->
-    <!---    </div>
-        <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
-        </div> --->
-
-        </div>
         </div>
 
 <cfinclude template="/common/footer.cfm">

@@ -1,5 +1,5 @@
 <!--- OBJECTS!! --->
-<cfset commonObj 	= createObject("component", "cfc.common")>	
+<!--- <cfset commonObj 	= createObject("component", "cfc.common")>	 --->
 
 
 	<cfquery name="projects_items" datasource="test">
@@ -42,15 +42,22 @@
         <div class="row border-bottom">
  
         </div>
-		<cfhttp url="https://basecamp.com/2544469/api/v1/projects/#URL.id#/topics.json"
+		
+		<cfset qryActivity = application.commonObj.basecamp_api(api_url="https://basecamp.com/2544469/api/v1/projects/#URL.id#/topics.json"
+							, username="patrick.a@thoughtbubble.com"
+							, password="pa77cfkit"
+				)
+		>
+		
+<!--- 		<cfhttp url="https://basecamp.com/2544469/api/v1/projects/#URL.id#/topics.json"
 					method="GET"
 					username="patrick.a@thoughtbubble.com"
 					password="pa77cfkit"
 					result="topics"		
 		>
 			
-			<cfset result = deserializeJSON(topics.filecontent)>
-			<cfset qryActivity = commonObj.arrayOfStructuresToQuery(theArray = result)>
+			<cfset result = deserializeJSON(topics.filecontent)> 
+			<cfset qryActivity = application.commonObj.arrayOfStructuresToQuery(theArray = result)>--->
 	
 		  <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
@@ -339,10 +346,13 @@
                         <a href="#" class="btn btn-xs btn-primary">Report contact</a>
 
                     </div> --->
+					<div class="m-t-md">
+                        <a href="/projects/" class="btn btn-xs btn-primary">Back</a>
+					</div>
                 </div>
             </div>
         </div>
-        <div class="footer">
+<!---         <div class="footer">
             <div class="pull-right">
                <!---  10GB of <strong>250GB</strong> Free. --->
             </div>
@@ -350,7 +360,7 @@
                 <strong>Copyright</strong> TB &copy; 2016
             </div>
         </div>
-<!---  <cfscript>
+ <cfscript>
 	function arrayOfStructuresToQuery(theArray){
 		var colNames = "";
 		var theQuery = queryNew("");

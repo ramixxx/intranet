@@ -32,6 +32,7 @@
 		<cfset application.environment = 'local'>
 		<!--- instantiate object --->
 		<cfset application.commonObj 	= createObject("component", "cfc.common")>
+		<cfset application.siteYear = LSDateFormat(now(), 'YYYY')>
         <!--- Return out. --->
         <cfreturn true />
     </cffunction>

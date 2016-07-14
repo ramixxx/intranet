@@ -1,4 +1,14 @@
+	<div class="footer">
+		<div class="pull-right">
+			10GB of <strong>250GB</strong> Free.
+		</div>
+		<div>
+		   <strong>Copyright</strong> TB &copy; <cfoutput>#application.siteYear#</cfoutput>
+		</div>
+	</div>
 
+	</div>
+	</div>
     <!-- Mainly scripts -->
     <script src="/js/jquery-2.1.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>

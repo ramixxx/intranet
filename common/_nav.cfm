@@ -15,9 +15,9 @@
                           <cfoutput>  <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><!--- #session.username# ---></strong></cfoutput>
                              </span> <span class="text-muted text-xs block">Job Title <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="profile.html">Profile</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="mailbox.html">Mailbox</a></li>
+                            <li><a href="/users/profile">Profile</a></li>
+                            <li><a href="/users/contacts">Contacts</a></li>
+                            <li><a href="/users/mailbox">Mailbox</a></li>
                             <li class="divider"></li>
                             <li><a href="?logout">Logout</a></li>
                         </ul>
