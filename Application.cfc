@@ -10,44 +10,144 @@
 	<cfset this.sessionmanagement = true />
 	<cfset this.sessiontimeout = CreateTimeSpan( 0, 1, 0, 0 ) />
     <cfset this.setclientcookies = false />
+	<cfset this.datasource = "test"/>
 
 
     <!--- Define the page request properties. --->
     <cfsetting
         requesttimeout="20"
-        showdebugoutput="false"
+        showdebugoutput="true"
         enablecfoutputonly="false"
-        />
+    />
 	
 
-<!---     <cffunction
+     <cffunction
         name="OnApplicationStart"
         access="public"
         returntype="boolean"
         output="false"
         hint="Fires when the application is first created.">
 
+		<cfset application.dsn = this.datasource>
+		<cfset application.environment = 'local'>
+		<!--- instantiate object --->
+		<cfset application.commonObj 	= createObject("component", "cfc.common")>
         <!--- Return out. --->
         <cfreturn true />
-    </cffunction>--->
+    </cffunction>
 
-
-<!---     <cffunction
-        name="OnSessionStart"
-        access="public"
-        returntype="void"
-        output="false"
-        hint="Fires when the session is first created.">
+	<cffunction
+		name="OnSessionStart"
+		access="public"
+		returntype="boolean"
+		output="false"
+		hint="Fires when the session is first created.">
 		
-		<cfset SESSION.User = StructNew() />
-		<cfset SESSION.User.ID = 0 />
-		<cfset SESSION.User.logged_in = "false" />
+		<cfset session.user = StructNew() />
+		<cfset session.user.logged_in = false />
+		
+		<cfif IsDebugMode()> 
+			<cfdump var="#session#" label="sessionStart">
+		</cfif>
+		<!--- Return out. --->
+		<cfreturn true/>
+	</cffunction>
+	
+	<cffunction
+        name="OnRequestStart"
+        access="public"
+        returntype="boolean"
+        output="false"
+        hint="Fires at first part of page processing.">
+		
+		<cfif structKeyExists(url,'reload')>
+			<cfset OnSessionStart()>
+			<cfset OnApplicationStart()>
+		</cfif>
+		
+		<cfif structKeyExists(url, 'logout')>
+			<!--- invalidate the current session --->
+			<cfset sessionInvalidate()>
+			<!--- trigger OnsessionStart so as to set default session variables --->
+			<cfset OnSessionStart()>
+		</cfif>
+		<!--- Return out. --->
+		<cfreturn true />
+    </cffunction>
+
+
+    <cffunction
+        name="OnRequest"
+        access="public"
+       <!---  returntype="void" --->
+        output="true"
+        hint="Fires after pre page processing is complete.">
+
+        <!--- Define arguments. --->
+        <cfargument
+            name="TargetPage"
+            type="string"
+            required="true"
+            />
+        <!--- Include the requested page. --->
+		
+		<!--- <cfdump var="#session#" label="onRequest(Application)"> --->
+		
+		<cfif session.user.logged_in>
+			<cfinclude template="#ARGUMENTS.TargetPage#" />
+		<cfelse>
+			<cfinclude template="/login/index.cfm">
+			<!--- 
+				create new session, copy date from old session to new session 
+				and invalidate old session. This will help to prevent session attacks.
+			--->
+			<cfset sessionRotate()>
+		</cfif>
+
+        <!--- Return out. --->
+        <cfreturn true/>
+    </cffunction>
+	
+    <cffunction
+        name="OnSessionEnd"
+        access="public"
+        returntype="boolean"
+        output="false"
+        hint="Fires when the session is terminated.">
+
+        <!--- Define arguments. --->
+        <cfargument
+            name="SessionScope"
+            type="struct"
+            required="true"
+        />
+
+        <cfargument
+            name="ApplicationScope"
+            type="struct"
+            required="false"
+            default="#StructNew()#"
+        />
+		
+		<cfif IsDebugMode()> 
+			<cfdump var="#arguments#" label="sessionStart">
+		</cfif>
 		
         <!--- Return out. --->
-        <cfreturn />
-    </cffunction> --->
-
-
+        <cfreturn true/>
+    </cffunction>
+	
+	<cffunction
+        name="OnRequestEnd"
+        access="public"
+		returntype="boolean"
+        output="true"
+        hint="Fires after the page processing is complete.">
+		
+        <!--- Return out. --->
+        <cfreturn true/>
+    </cffunction>
+	
   <!---  <cffunction
         name="OnRequestStart"
         access="public"
@@ -101,30 +201,7 @@
     </cffunction>
 
 
-    <cffunction
-        name="OnSessionEnd"
-        access="public"
-        returntype="void"
-        output="false"
-        hint="Fires when the session is terminated.">
 
-        <!--- Define arguments. --->
-        <cfargument
-            name="SessionScope"
-            type="struct"
-            required="true"
-            />
-
-        <cfargument
-            name="ApplicationScope"
-            type="struct"
-            required="false"
-            default="#StructNew()#"
-            />
-
-        <!--- Return out. --->
-        <cfreturn />
-    </cffunction>
 
 
     <cffunction
