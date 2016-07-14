@@ -1,2 +1,3 @@
-<cfset logout = StructClear(session)>
-<cflocation url="/login/" addtoken="no">
+<!--- <cfset logout = StructClear(session)> 
+<cfset logout = sessionInvalidate()>
+<cflocation url="/login/" addtoken="no">--->

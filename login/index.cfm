@@ -1,18 +1,23 @@
 <cfparam name="message" default="">
-<cfparam name="form.submit" default="">
-<cfset commonObj 	= createObject("component", "cfc.common")>
+<cfparam name="form.submit" default=""><!--- 
+<cfset commonObj 	= createObject("component", "cfc.common")> --->
 <cfif form.submit NEQ ''>
-	<cfset login = commonObj.ldap_login(ldap_server="10.0.0.86",domain="thoughtbubble",user=form.user,password=form.password)>
+
+	<cfset login = application.commonObj.ldap_login(ldap_server="10.0.0.86",domain="thoughtbubble",user=form.user,password=form.password)>
 	
 	<cfif LEN(variables.login)>
-		<cfdump var="#session#">
-		<cfset session.User.username = variables.login.SamAccountname>
-		<cfset SESSION.User.logged_in = "true"> 
-		<cfdump var="#session#">
-		<cflocation url="/projects/" addtoken="no"> 
+	
+		<cfset session.user.username = variables.login.SamAccountname>
+		<cfset session.user.logged_in = "true"> 
+		<!--- <cfdump var="#session#" label="login"> --->
+		<cflocation url="/projects/" addtoken="no">
+		
 	<cfelse>
+	
 		<cfset message = "No User Found Please try again. Please log in with your system login details.">
+		
 	</cfif>
+	
 </cfif> 
 
 <!--- <cfdump var="#session#"> --->
