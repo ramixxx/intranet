@@ -9,9 +9,10 @@ Was originally written just to mess around with the basecamp API and tryout SQLL
 * Configuration
 
 * Dependencies
+
 [Lucee 4.5+](http://lucee.org/downloads.html)
 
-[SQLLite Jar](https://bitbucket.org/xerial/sqlite-jdbc/downloads)
+[SQLite Jar](https://bitbucket.org/xerial/sqlite-jdbc/downloads)
 
 
 * Database configuration
