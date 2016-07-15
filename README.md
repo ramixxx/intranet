@@ -1,6 +1,6 @@
 # README #
 
-Was originally written just to mess around with the basecamp API and tryout SQLLite
+Was originally written just to mess around with the basecamp API's and tryout SQLite LDAP Auth
 
 ### How do I get set up? ###
 
