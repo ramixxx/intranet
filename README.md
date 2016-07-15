@@ -1,6 +1,6 @@
 # README #
 
-Was originally written just to mess around with the basecamp API's and tryout SQLite LDAP Auth
+Was originally written just to mess around with the basecamp API's and tryout SQLite LDAP Auth and testing Bitbucket issue tracker
 
 ### How do I get set up? ###
 
