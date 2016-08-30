@@ -5,7 +5,7 @@
 
 	<cfset login = application.commonObj.ldap_login(ldap_server="10.0.0.86",domain="thoughtbubble",user=form.user,password=form.password)>
 	
-	<cfif LEN(variables.login)>
+	<cfif variables.login.recordcount>
 	
 		<cfset session.user.username = variables.login.SamAccountname>
 		<cfset session.user.logged_in = "true"> 
