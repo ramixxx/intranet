@@ -6,7 +6,6 @@
 	where username <> '#session.user.username#'
 	ORDER by first_name, last_name
 </cfquery> 
-
 <cfinclude template="/common/header.cfm">
 
         </div>
@@ -40,7 +39,7 @@
                                 All clients need to be verified before you can send email and set a project.
                             </p> --->
                             <div class="input-group">
-                                <input type="text" placeholder="Search client " class="input form-control">
+                                <input type="text" placeholder="Search Users" class="input form-control">
                                 <span class="input-group-btn">
                                         <button type="button" class="btn btn btn-primary"> <i class="fa fa-search"></i> Search</button>
                                 </span>
@@ -48,7 +47,7 @@
                             <div class="clients-list">
                             <ul class="nav nav-tabs">
                                 <span class="pull-right small text-muted"><cfoutput>#qryUsers.recordcount# </cfoutput> Users</span>
-                                <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Contacts</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Users</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i> Companies</a></li>
                             </ul>
                             <div class="tab-content">
@@ -201,10 +200,10 @@
 
                                 <div id="company-1" class="tab-pane">
                                     <div class="m-b-lg">
-                                            <h2>Tellus Institute</h2>
+                                            <h2>--Tellus Institute</h2>
 
                                             <p>
-                                                Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,written in 45 BC. This book is a treatise on.
+                                               -- Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,written in 45 BC. This book is a treatise on.
                                             </p>
                                             <div>
                                                 <small>Active project completion with: 48%</small>
@@ -305,10 +304,10 @@
                                 </div>
                                 <div id="company-2" class="tab-pane">
                                     <div class="m-b-lg">
-                                        <h2>Penatibus Consulting</h2>
+                                        <h2>++Penatibus Consulting</h2>
 
                                         <p>
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.
+                                            ++There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.
                                         </p>
                                         <div>
                                             <small>Active project completion with: 22%</small>

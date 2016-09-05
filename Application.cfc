@@ -9,6 +9,7 @@
     <cfset this.applicationtimeout = CreateTimeSpan( 0, 1, 0, 0 ) />
 	<cfset this.sessionmanagement = true />
 	<cfset this.sessiontimeout = CreateTimeSpan( 0, 1, 0, 0 ) />
+	<cfset this.clientmanagement = true /> 
     <cfset this.setclientcookies = false />
 	<cfset this.datasource = "test"/>
 
@@ -53,62 +54,7 @@
 		<!--- Return out. --->
 		<cfreturn true/>
 	</cffunction>
-	
-	<cffunction
-        name="OnRequestStart"
-        access="public"
-        returntype="boolean"
-        output="false"
-        hint="Fires at first part of page processing.">
 		
-		<cfif structKeyExists(url,'reload')>
-			<cfset OnSessionStart()>
-			<cfset OnApplicationStart()>
-		</cfif>
-		
-		<cfif structKeyExists(url, 'logout')>
-			<!--- invalidate the current session --->
-			<cfset sessionInvalidate()>
-			<!--- trigger OnsessionStart so as to set default session variables --->
-			<cfset OnSessionStart()>
-		</cfif>
-		<!--- Return out. --->
-		<cfreturn true />
-    </cffunction>
-
-
-    <cffunction
-        name="OnRequest"
-        access="public"
-       <!---  returntype="void" --->
-        output="true"
-        hint="Fires after pre page processing is complete.">
-
-        <!--- Define arguments. --->
-        <cfargument
-            name="TargetPage"
-            type="string"
-            required="true"
-            />
-        <!--- Include the requested page. --->
-		
-		<!--- <cfdump var="#session#" label="onRequest(Application)"> --->
-		
-		<cfif session.user.logged_in>
-			<cfinclude template="#ARGUMENTS.TargetPage#" />
-		<cfelse>
-			<cfinclude template="/login/index.cfm">
-			<!--- 
-				create new session, copy date from old session to new session 
-				and invalidate old session. This will help to prevent session attacks.
-			--->
-			<cfset sessionRotate()>
-		</cfif>
-
-        <!--- Return out. --->
-        <cfreturn true/>
-    </cffunction>
-	
     <cffunction
         name="OnSessionEnd"
         access="public"
@@ -139,12 +85,92 @@
     </cffunction>
 	
 	<cffunction
+        name="OnRequestStart"
+        access="public"
+        returntype="boolean"
+        output="false"
+        hint="Fires at first part of page processing.">
+		
+        <!--- Define arguments. --->
+        <cfargument
+            name="TargetPage"
+            type="string"
+            required="true"
+        />
+			
+		<cfif structKeyExists(url,'reload')>
+			<cfset OnSessionStart()>
+			<cfset OnApplicationStart()>
+		</cfif>
+		
+		<cfif structKeyExists(url, 'logout')>
+			<!--- invalidate the current session --->
+			<cfset sessionInvalidate()>
+			<!--- trigger OnsessionStart so as to set default session variables --->
+			<cfset OnSessionStart()>
+		</cfif>
+		
+		<cfif IsDebugMode()> 
+			<cfdump var="#session#" label="onRequestStart()">
+		</cfif>
+		
+		<cfset Request.user.logged_in = false>
+		<cfset Request.user.username = 'anonymous'>
+		
+ 		<cfif structKeyExists(session, 'user') and session.user.logged_in>
+			<cfset Request.user.logged_in = session.user.logged_in>
+			<cfset Request.user.username = session.user.username>
+		<cfelse>
+			<cfinclude template="/login/index.cfm">
+			<!--- 
+				create new session, copy date from old session to new session 
+				and invalidate old session. This will help to prevent session attacks.
+			--->
+			<cfset sessionRotate()>
+		</cfif>
+		<!--- Return out. --->
+		<cfreturn true />
+    </cffunction>
+
+
+    <cffunction
+        name="OnRequest"
+        access="public"
+       <!---  returntype="void" --->
+        output="true"
+        hint="Fires after pre page processing is complete.">
+
+        <!--- Define arguments. --->
+        <cfargument
+            name="TargetPage"
+            type="string"
+            required="true"
+            />
+        <!--- Include the requested page. --->		
+		
+ 		<cfif StructKeyExists(session, 'user') and session.user.logged_in>
+			<cfinclude template="#ARGUMENTS.TargetPage#" />
+		<cfelse>
+			<cfinclude template="/login/index.cfm">
+			<!--- 
+				create new session, copy date from old session to new session 
+				and invalidate old session. This will help to prevent session attacks.
+			--->
+			<cfset sessionRotate()>
+		</cfif>
+        <!--- Return out. --->
+        <cfreturn true/>
+    </cffunction>
+
+	
+	<cffunction
         name="OnRequestEnd"
         access="public"
 		returntype="boolean"
         output="true"
         hint="Fires after the page processing is complete.">
 		
+		<!--- <cfdump var="#session#" label="onRequestEnd(Application)"> --->
         <!--- Return out. --->
         <cfreturn true/>
     </cffunction>

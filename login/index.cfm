@@ -6,21 +6,18 @@
 	<cfset login = application.commonObj.ldap_login(ldap_server="10.0.0.86",domain="thoughtbubble",user=form.user,password=form.password)>
 	
 	<cfif variables.login.recordcount>
-	
 		<cfset session.user.username = variables.login.SamAccountname>
-		<cfset session.user.logged_in = "true"> 
-		<!--- <cfdump var="#session#" label="login"> --->
-		<cflocation url="/projects/" addtoken="no">
-		
+		<cfset session.user.logged_in = true>
 	<cfelse>
-	
 		<cfset message = "No User Found Please try again. Please log in with your system login details.">
-		
 	</cfif>
 	
-</cfif> 
+</cfif>
 
-<!--- <cfdump var="#session#"> --->
+<cfif StructKeyExists(session, 'user') and session.user.logged_in> 
+	<cflocation url="/projects/index.cfm" addtoken="no">
+</cfif>
+
 <!--- <cfcontent type="text/html; charset=utf-8" reset="true" /> --->
 <!DOCTYPE html>
 <html>

@@ -1,6 +1,5 @@
 <!--- OBJECTS!! --->
 <cfset commonObj 	= createObject("component", "cfc.common")>	
-
 <cfquery name="projects" datasource="test">
 	SELECT * FROM projects AS p
 	LEFT JOIN user_project up ON up.project_id = p.id

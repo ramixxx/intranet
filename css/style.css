@@ -4789,6 +4789,9 @@ a.compose-mail {
 .profile-info {
   margin-left: 120px;
 }
+.profile-content .profile-name{
+	text-transform: capitalize;
+}
 .feed-activity-list .feed-element {
   border-bottom: 1px solid #e7eaec;
 }
@@ -8226,4 +8229,15 @@ body.md-skin {
   #page-wrapper {
     margin: 0;
   }
+}
+
+/*custom css classes*/
+
+.no-padding-l{
+	padding-left:0;
+	margin-left:0;
+}
+.no-padding-r{
+	padding-right:0;
+	margin-right:0;
 }

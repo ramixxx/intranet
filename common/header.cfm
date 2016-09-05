@@ -22,6 +22,10 @@
 
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+<!---     <link href="/css/plugins/file/jquery.fileupload-noscript.css" rel="stylesheet">
+    <link href="/css/plugins/file/jquery.fileupload-ui-noscript.css" rel="stylesheet"> --->
+    <link href="/css/plugins/file/jquery.fileupload.css" rel="stylesheet">
+    <link href="/css/plugins/file/jquery.fileupload-ui.css" rel="stylesheet">
 
 </head>
 

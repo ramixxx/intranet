@@ -299,3 +299,28 @@ function WinMove() {
 }
 
 
+
+//custom functions
+
+
+$(document).ready(function(){
+	$('#edit-profile-btn').click(function(evt){
+		$('.ibox-title h5').prepend('<span class="prepend-text">Edit</span> ');
+		$('.profile-image-container').toggleClass('hide');
+		$('.profile-content').toggleClass('hide');
+		$('.profile-form').toggleClass('hide');
+		$('.user-button').addClass('hide').removeClass('show');
+		
+	});
+	
+	$('#cancel-profile-btn').click(function(evt){
+		$('.prepend-text').remove();
+		$('.profile-image-container').toggleClass('hide');
+		$('.profile-content').toggleClass('hide');
+		$('.profile-form').toggleClass('hide');
+		$('.user-button').addClass('show').removeClass('hide');
+		
+	});
+	
+	
+});
