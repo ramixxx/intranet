@@ -4,6 +4,19 @@
 	where username = '#session.user.username#'
 	ORDER by first_name, last_name
 </cfquery> 
+
+ <cfquery name="qryUserTitle" datasource="#application.DSN#">
+	SELECT id_title, title
+	FROM user_title
+	ORDER by id_title
+</cfquery> 
+
+<cfquery name="qryJobTitle" datasource="#application.DSN#">
+	SELECT id_job_title, title
+	FROM job_title
+	ORDER by id_job_title
+</cfquery> 
+
 <cfdump var="#qryUsers#">
 <cfoutput><div class="row wrapper border-bottom white-bg page-heading">
 	<div class="col-lg-10">
@@ -36,7 +49,7 @@
 						<img alt="image" class="img-responsive" src="/img/profile_big.jpg">
 					</div>
 					<div class="ibox-content profile-content">
-						<h4 class="profile-name"><strong>#qryUsers.first_name# #qryUsers.last_name#</strong></h4>
+						<h4 class="profile-name"><strong>#qryUsers.title# #qryUsers.first_name# #qryUsers.last_name# </strong>(ColdFusion Developer)</h4>
 						<p><i class="fa fa-envelope"></i> <span class="m-l-xs">#qryUsers.email#</span></p>
 						<p><i class="fa fa-mobile"></i> <span class="m-l-xs">+44 (0)74-2588-5429</span></p>
 						<p><i class="fa fa-phone"></i> <span class="m-l-xs">+44 (0)20 7387 8890</span></p>
@@ -77,7 +90,7 @@
 							<div class="row profile-image-container hide">
 								<img alt="image" class="img-responsive" src="/img/profile_big.jpg">
 								<div class="row col-md-12">
-								<span class="btn btn-success fileinput-button">
+								<span class="btn btn-primary fileinput-button btn-sm">
 									<i class="glyphicon glyphicon-plus"></i>
 									<span>Add files...</span>
 									<input id="fileupload" class="input form-control" type="file" name="profile_image">
@@ -85,11 +98,29 @@
 								</div>
 							</div>
 							<div class="row profile-form hide">
-								<div class="col-md-6 no-padding-r m-b">
+								<div class="col-md-4 no-padding-r m-b">
+									<select class="input form-control" name="title">
+										<option value="0">Select Title</option>
+										<cfloop query="qryUserTitle">
+											<option value="#qryUserTitle.id_title#">#qryUserTitle.title#</option>
+										</cfloop>
+									</select>
+								</div>
+								<div class="col-md-4 no-padding-r m-b">
 									<input class="input form-control" type="text" placeholder="First Name" value="#qryUsers.first_name#" name="first_name">
 								</div>
-								<div class="col-md-6 m-b">
+								<div class="col-md-4 m-b">
 									<input class="input form-control" type="text" placeholder="Last Name" value="#qryUsers.last_name#" name="last_name">
+								</div>
+								<div class="col-md-12 m-b">
+									<select class="input form-control" name="job_title">
+										<option value="0">Select Job Title</option>
+										<cfloop query="qryJobTitle">
+											<option value="#qryJobTitle.id_job_title#">#qryJobTitle.title#</option>
+										</cfloop>
+										<option value="999">Other</option>
+									</select>
+									<input class="input form-control hide" type="text" placeholder="e.g ColdFusion Developer" value="" name="user_job_title">
 								</div>
 								<div class="col-md-12 m-b">
 									<input class="input form-control" type="email" placeholder="email@yourdomain.com" value="#qryUsers.email#" name="email">
