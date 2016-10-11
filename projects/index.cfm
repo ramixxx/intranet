@@ -1,16 +1,148 @@
 <!--- OBJECTS!! --->
 <cfset commonObj 	= createObject("component", "cfc.common")>	
+
 <cfquery name="projects" datasource="test">
-	SELECT * FROM projects AS p
-	LEFT JOIN user_project up ON up.project_id = p.id
-	LEFT JOIN users u ON u.user_id = up.user_id
-	WHERE p.is_active = 1 AND u.username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#session.user.username#">
+	SELECT * FROM projects 
+	WHERE is_active = 1
 	<!--- LEFT JOIN project_item_types ON projects.id = project_item_types.project_id
 	WHERE type_id IN (1,3,4,5,6) --->
 </cfquery>
 
 <cfinclude template="/common/header.cfm">
-	
+
+<!---         <div id="page-wrapper" class="gray-bg"> --->
+        <div class="row border-bottom">
+      <!---   <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0"> --->
+<!---         <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" action="search_results.html">
+                <div class="form-group">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div> --->
+         <!---    <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <!--- <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="img/a7.jpg">
+                                </a>
+                                <div class="media-body">
+                                    <small class="pull-right">46h ago</small>
+                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>0
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="img/a4.jpg">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right text-navy">5h ago</small>
+                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="profile.html" class="pull-left">
+                                    <img alt="image" class="img-circle" src="img/profile.jpg">
+                                </a>
+                                <div class="media-body ">
+                                    <small class="pull-right">23h ago</small>
+                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="mailbox.html">
+                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="mailbox.html">
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="profile.html">
+                                <div>
+                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="grid_options.html">
+                                <div>
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="notifications.html">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li> --->
+
+
+                <li>
+                    <a href="login.html">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+
+        </nav> --->
+        </div>
+				
+<!--- 		<cfhttp url="https://basecamp.com/2544469/api/v1/projects.json"
+					method="GET"
+					username="mitch.e@thoughtbubble.com"
+					password="radic6basecamp"
+			>
+			
+			<cfset result = deserializeJSON(cfhttp.filecontent)>
+			<cfset test = arrayOfStructuresToQuery(result)> --->
+			<!--- <cfdump var="#result#">  --->
+			
+			
 			 <!--- <cfdump var="#test#">   --->
 			
 		            <div class="row wrapper border-bottom white-bg page-heading">
@@ -32,7 +164,7 @@
 
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>All projects assigned to this account</h5>
+                            <h5>All projects assigned to this account</h5><div style="text-align:right"><a  class="btn btn-primary btn-xs" href="create_project_form.cfm">New project</a></div>
                             <div class="ibox-tools">
                                <!---  <a href="" class="btn btn-primary btn-xs">Create new project</a> --->
                             </div>
@@ -47,6 +179,7 @@
                                         <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
                                 </div> --->
                             </div>
+<!--- <cfdump var="#test#"> --->
                             <div class="project-list">
 
                                 <table class="table table-hover table-striped">
@@ -117,7 +250,7 @@
 											SELECT * FROM projects 
 											LEFT JOIN project_item_types_values ON projects.id = project_item_types_values.project_id
 											LEFT JOIN project_item_types ON project_item_types.type_id = project_item_types_values.type_id
-											WHERE project_item_types.type_id IN (1,2,3,4,5,6,8,9)
+											WHERE project_item_types.type_id IN (1,2,3,4,5,6,8,9,27)
 											AND projects.id = #projects.id#
 											ORDER  BY project_item_types.type_id DESC
 										</cfquery>
@@ -142,15 +275,27 @@
                                         <td class="project-people">  
 										<cfloop query="projects_items">
                                             <cfif projects_items.type_id EQ 2>
+                                            
 											<button class="copy_to img-circle" style="border: 0; background: transparent" data-clipboard-text="#value#">
 												<img alt="image" class="img-circle" src="/img/project_item_types/#projects_items.type_id#.png">
 											</button>
+                                                
 											<cfelse>
+                                               
 											<a href="#value#">
 												<img alt="image" class="img-circle" src="/img/project_item_types/#projects_items.type_id#.png">
 											</a>
+                                                
 											</cfif>
+
 										</cfloop>
+                                        <a href="add_new_project_type.cfm?project_id=#projects.id#" class="btn btn-white btn-sm">Add new information type</a>
+                                        
+
+                                        <form action="delete_project.cfm" style="margin-bottom:0px" method="Post">
+                                                                         <input type="hidden" value="#id#" name="id">
+                                                                         <input type="submit" value="Delete project" name="submit" class="btn btn-danger btn-sm pull-right">
+                                        </form>
                                         </td>
                                         <td class="project-actions">
                                             <a href="https://basecamp.com/2544469/projects/#basecamp_id#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View on basecamp </a>
@@ -167,9 +312,19 @@
                 </div>
             </div>
         </div>
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+               <!---  <strong>Copyright</strong> Example Company &copy; 2014-2015 --->
+            </div>
+        </div>
 
+        </div>
+        </div>
 
-<!--- <cfscript>
+<cfscript>
 	function arrayOfStructuresToQuery(theArray){
 		var colNames = "";
 		var theQuery = queryNew("");
@@ -192,7 +347,7 @@
 		}
 		return theQuery;
 	}
-</cfscript> --->
+</cfscript>
 
 
 		

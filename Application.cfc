@@ -10,7 +10,7 @@
 	<cfset this.sessionmanagement = true />
 	<cfset this.sessiontimeout = CreateTimeSpan( 0, 1, 0, 0 ) />
 	<cfset this.clientmanagement = true /> 
-    <cfset this.setclientcookies = false />
+    <cfset this.setclientcookies = true />
 	<cfset this.datasource = "test"/>
 
 
