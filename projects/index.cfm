@@ -250,7 +250,7 @@
 											SELECT * FROM projects 
 											LEFT JOIN project_item_types_values ON projects.id = project_item_types_values.project_id
 											LEFT JOIN project_item_types ON project_item_types.type_id = project_item_types_values.type_id
-											WHERE project_item_types.type_id IN (1,2,3,4,5,6,8,9,27)
+											WHERE project_item_types.type_id IN (1,2,3,4,5,6,8,9)
 											AND projects.id = #projects.id#
 											ORDER  BY project_item_types.type_id DESC
 										</cfquery>
