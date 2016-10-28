@@ -1,7 +1,20 @@
+
   <cfquery name="menu_items" datasource="test">
 	  SELECT * FROM nav
 	  ORDER BY order_id 
   </cfquery>
+
+    <cfquery name="getpublicimage" datasource="test">
+      SELECT fileUpload FROM users
+      WHERE username = '#SESSION.user.username#'
+  </cfquery>
+
+
+<cfquery datasource="test" name="getfirstuser">
+  SELECT username FROM users 
+  WHERE username <> '#session.user.username#'
+  LIMIT 1
+</cfquery>
 
 
   <nav class="navbar-default navbar-static-side" role="navigation">
@@ -9,14 +22,17 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" height="100" width="100" src="/img/user_icon.png" />
+                    <cfoutput query="getpublicimage">
+                            <img alt="image" class="img-circle" height="100" width="100" src="/img/user_images/#fileUpload#" />
+                    </cfoutput>
+
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <cfoutput>  <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><!--- #session.username# ---></strong></cfoutput>
-                             </span> <span class="text-muted text-xs block">Job Title <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">User menu <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="/users/profile">Profile</a></li>
-                            <li><a href="/users/contacts">Contacts</a></li>
+                            <cfoutput query="getfirstuser"><li><a href="/users/contacts?username=#username#">Contacts</a></li></cfoutput>
                             <li><a href="/users/mailbox">Mailbox</a></li>
                             <li class="divider"></li>
                             <li><a href="?logout">Logout</a></li>
@@ -31,6 +47,14 @@
 					<li>
 						<a href="#menu_items.link#"><i class="#menu_items.icon#"></i> <span class="nav-label">#menu_items.name#</span></a>
 					</li>
+
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="/users/profile">Profile</a></li>
+                            <cfoutput query="getfirstuser"><li><a href="/users/contacts?username=#username#">Contacts</a></li></cfoutput>
+                            <li><a href="/users/mailbox">Mailbox</a></li>
+                            <li class="divider"></li>
+                            <li><a href="?logout">Logout</a></li>
+                        </ul>
 				</cfoutput>
             </ul> 
         </div>
@@ -49,7 +73,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to Thoughtbubble</span>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to Thoughtbubble, <cfoutput>#SESSION.user.username#</cfoutput></span>
                 </li>
 				<li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">

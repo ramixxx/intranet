@@ -17,7 +17,7 @@
 	ORDER by id_job_title
 </cfquery> 
 
-<cfdump var="#qryUsers#">
+
 <cfoutput><div class="row wrapper border-bottom white-bg page-heading">
 	<div class="col-lg-10">
 		<h2>Profile</h2>

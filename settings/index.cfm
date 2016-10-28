@@ -164,7 +164,11 @@
 
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>No Settings yet</h5><div style="text-align:right"><a  class="btn btn-primary btn-xs" href="make_new_information_type.cfm">Make new information type</a></div>
+                            <h5>No Settings yet</h5>
+                                <div style="text-align:right;">
+                                    <a class="btn btn-primary btn-xs" href="edit_my_profile.cfm">Edit my profile</a>
+                                    <a class="btn btn-primary btn-xs" href="make_new_information_type.cfm">Make new information type</a>
+                                </div>
                             <div class="ibox-tools">
                                <!---  <a href="" class="btn btn-primary btn-xs">Create new project</a> --->
                             </div>

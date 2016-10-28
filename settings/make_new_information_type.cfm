@@ -42,10 +42,14 @@
                         <div class="ibox-title">
                             <h5>Add new information type</h5>
                             <div class="ibox-tools">
-                               <!---  <a href="" class="btn btn-primary btn-xs">Create new project</a> --->
+                                 <div style="text-align:right;">
+                                    <a class="btn btn-primary btn-xs" href="edit_my_profile.cfm">Edit my profile</a>
+                                    <a class="btn btn-primary btn-xs" href="make_new_information_type.cfm">Make new information type</a>
+                                </div> <!---  <a href="" class="btn btn-primary btn-xs">Create new project</a> --->
                             </div>
                         </div>
                         <div class="ibox-content">
+                            
                             <div class="row m-b-sm m-t-sm">
                                 <cfoutput query="selectid">
                                     <input type="hidden" name="#id#" value="#id#" >

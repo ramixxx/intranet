@@ -69,12 +69,19 @@
    
                                            <div style="text-align:center;">
                                             <div class="col-md-2">
+                                                <h4 style="padding-left:20px;">Will be active in project details</h4>
                                                 <label><input type="radio" name='active' value='0'>Inactive</label></br>
 
                                                 <label><input type="radio" name='active' value='1'>Active</label>
                                             </div>
+                                            <div class="col-md-2">
+                                                <h4 style="padding-left:20px;">Will be active in project view</h4>
+                                                <label><input type="radio" name='show_in_view' value='0'>Inactive</label></br>
+
+                                                <label><input type="radio" name='show_in_view' value='1'>Active</label>
                                             </div>
-                                            <div class="col-md-1">
+                                            </div>
+                                            <div class="col-md-12" style="text-align:center">
                                                 <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                                             </div>
                             </form>        

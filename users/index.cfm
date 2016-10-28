@@ -1,5 +1,5 @@
-<!--- OBJECTS!! 
-<cfset commonObj 	= createObject("component", "cfc.common")>	--->
+<!---  OBJECTS!!  --->
+<cfset commonObj 	= createObject("component", "cfc.common")>	
 
  <cfquery name="qryUsers" datasource="#application.DSN#">
 	SELECT * FROM users
@@ -8,7 +8,6 @@
 </cfquery> 
 <cfinclude template="/common/header.cfm">
 
-        </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Users</h2>
@@ -44,6 +43,7 @@
                                         <button type="button" class="btn btn btn-primary"> <i class="fa fa-search"></i> Search</button>
                                 </span>
                             </div>
+                            <div style="text-align:right; margin-top:20px;"><a  class="btn btn-primary btn-xs" href="create_new_user.cfm">Add new user</a></div>
                             <div class="clients-list">
                             <ul class="nav nav-tabs">
                                 <span class="pull-right small text-muted"><cfoutput>#qryUsers.recordcount# </cfoutput> Users</span>

@@ -1,6 +1,6 @@
 
 <cfquery datasource="test" name="gettypeid">
-    SELECT type_id FROM project_item_types
+    SELECT type_id  FROM project_item_types
     ORDER BY type_id DESC
     LIMIT 1
 </cfquery>
@@ -22,11 +22,14 @@
 	 		
 	 		)
 </cfquery>
+
+<cfset type_if_plus_one = '#type_id#' + '1'>
+
 </cfoutput> 
 
-<cfoutput query="getnumberoutput">
+<cfoutput query="gettypeid">
    <cffile action="upload"
-        destination="C:\inetpub\wwwroot\intranet\img\project_item_types\#id#.png"
+        destination="C:\inetpub\wwwroot\intranet\img\project_item_types\#type_if_plus_one#.png"
         nameConflict="overwrite"
         fileField="fileUpload"
         accept = "*" >
